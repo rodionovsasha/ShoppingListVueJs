@@ -1,6 +1,6 @@
-# shopping-list-vue-js
+[![Build Status](https://travis-ci.org/rodionovsasha/ShoppingListVueJs.svg?branch=master)](https://travis-ci.org/rodionovsasha/ShoppingListVueJs)
 
-> ShoppingList Vue.js project
+# ShoppingList Vue.js
 
 ## Build Setup
 
