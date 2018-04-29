@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 // import ShoppingList from './components/ShoppingList'
-// import router from './router'
+import router from './router'
 
 Vue.config.productionTip = false
 
@@ -22,7 +22,7 @@ Vue.component('listItem', {
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  // router,
+  router,
   components: {App},
   template: '<App/>',
   data: {
