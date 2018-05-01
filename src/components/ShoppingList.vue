@@ -10,9 +10,9 @@
     <ul class="list-unstyled" v-else>
       <li v-for="list in itemsLists" v-bind:key="list.id">
         <p>
-          <a v-bind:href="'/itemsList?id=' + list.id" class="btn btn-outline-secondary">{{ list.name }}</a>
-          <a v-bind:href="'/itemsList/edit?id=' + list.id" class="btn btn-warning btn-sm">Edit</a>
-          <a v-bind:href="'/itemsList/delete?id=' + list.id" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this list?')">Delete</a>
+          <router-link v-bind:to="{ path: '/itemsList/' + list.id }" class="btn btn-outline-secondary">{{ list.name }}</router-link>
+          <a v-bind:href="'/#/itemsList/edit?id=' + list.id" class="btn btn-warning btn-sm">Edit</a>
+          <a v-bind:href="'/#/itemsList/delete?id=' + list.id" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this list?')">Delete</a>
         </p>
       </li>
     </ul>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import {AXIOS} from './http-common'
 
 export default {
   name: 'ShoppingList',
@@ -36,8 +36,7 @@ export default {
     }
   },
   mounted () {
-    axios
-      .get('http://localhost:8000/v1/api')
+    AXIOS.get('/')
       .then(response => {
         this.itemsLists = response.data
         this.loading = false
