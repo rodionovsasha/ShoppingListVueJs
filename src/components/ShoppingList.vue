@@ -8,11 +8,11 @@
     <h1>Shopping list</h1>
     <div v-if="loading">Loading...</div>
     <ul class="list-unstyled" v-else>
-      <li v-for="list in itemsLists" v-bind:key="list.id">
+      <li v-for="(list, index) in itemsLists" v-bind:key="list.id">
         <p>
           <router-link v-bind:to="{ path: '/itemsList/' + list.id }" class="btn btn-outline-secondary">{{ list.name }}</router-link>
           <a v-bind:href="'/#/itemsList/edit?id=' + list.id" class="btn btn-warning btn-sm">Edit</a>
-          <a v-bind:href="'/#/itemsList/delete?id=' + list.id" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this list?')">Delete</a>
+          <a href="#" class="btn btn-danger btn-sm" @click.prevent="confirmDelete(list.id, index)">Delete</a>
         </p>
       </li>
     </ul>
@@ -46,6 +46,26 @@ export default {
         this.error = true
         this.loading = false
       })
+  },
+  methods: {
+    confirmDelete: function (id, index) {
+      this.$dialog.confirm('Are you sure you want to delete this list?')
+        .then(() => {
+          console.log('Deletion confirmed')
+          AXIOS.delete('/itemsList/' + id)
+            .then(() => {
+              // remove list from current page
+              this.itemsLists.splice(index, 1)
+            })
+            .catch(error => {
+              console.log(error)
+              this.error = true
+            })
+        })
+        .catch(function () {
+          console.log('Deletion canceled')
+        })
+    }
   }
 }
 </script>
