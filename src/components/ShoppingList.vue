@@ -54,7 +54,7 @@ export default {
           console.log('Deletion confirmed')
           AXIOS.delete('/itemsList/' + id)
             .then(() => {
-              // remove list from current page
+              // remove list from view
               this.itemsLists.splice(index, 1)
             })
             .catch(error => {
