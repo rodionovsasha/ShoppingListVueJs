@@ -1,0 +1,23 @@
+server:
+ port: ${port:8000}
+ servlet:
+   context-path: /api/v1
+
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+
+logging:
+  file: shoppingList.log
+  level:
+    org:
+      hibernate: ERROR
+      springframework:
+        web: DEBUG
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs

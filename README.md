@@ -2,9 +2,44 @@
 
 # ShoppingList Vue.js
 
-## Build Setup
+### Build the application
+<pre>
+mvn clean install
+</pre>
+or using wrapper
+<pre>
+./mvnw clean install
+</pre>
 
+### Run backend
+<pre>
+mvn --projects shoppinglist-backend spring-boot:run
+</pre>
+or simply run the application in your IDE using public static void main method.
+
+Open the following URL in browser:
+<pre>
+http://localhost:8000/api/v1/
+</pre>
+Port and context path can be configured in `application.yml` properties.
+`8000` is a default port and can be overridden in a command line as well:
+```
+mvn spring-boot:run -Dport=9090
+```
+
+### Swagger
+http://localhost:8000/api/v1/swagger-ui.html
+
+### Rest JSON API URL
+```
+http://localhost:8000/api/v1/
+```
+
+### Run frontend
 ``` bash
+# go to frontend module
+cd shoppinglist-frontend
+
 # install dependencies
 npm install
 
@@ -23,5 +58,3 @@ npm run unit
 # run all tests
 npm test
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
