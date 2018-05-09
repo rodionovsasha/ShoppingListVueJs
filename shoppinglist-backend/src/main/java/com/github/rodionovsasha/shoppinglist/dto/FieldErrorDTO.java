@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 class FieldErrorDTO {
-    private String field;
-    private String message;
+    private final String field;
+    private final String message;
 }

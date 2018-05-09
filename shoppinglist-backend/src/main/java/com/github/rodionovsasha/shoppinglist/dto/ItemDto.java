@@ -3,13 +3,14 @@ package com.github.rodionovsasha.shoppinglist.dto;
 
 import com.github.rodionovsasha.shoppinglist.entities.Item;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor
 public class ItemDto implements Serializable {
     private static final long serialVersionUID = 1;
 
@@ -18,9 +19,6 @@ public class ItemDto implements Serializable {
     @NotEmpty
     private String name;
     private String comment;
-
-    public ItemDto() {
-    }
 
     public ItemDto(long listId, String name) {
         this.listId = listId;

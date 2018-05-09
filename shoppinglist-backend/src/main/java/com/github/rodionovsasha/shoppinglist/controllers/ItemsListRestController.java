@@ -4,6 +4,8 @@ import com.github.rodionovsasha.shoppinglist.dto.ItemsListDto;
 import com.github.rodionovsasha.shoppinglist.entities.ItemsList;
 import com.github.rodionovsasha.shoppinglist.services.ItemsListService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +14,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-
+@ApiResponses({
+        @ApiResponse(code = 400, message = "Bad request"),
+        @ApiResponse(code = 404, message = "Items list not found")
+})
 @Slf4j
 @RestController
 @RequestMapping
