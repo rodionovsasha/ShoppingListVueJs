@@ -33,7 +33,7 @@ public class ItemsListServiceImpl implements ItemsListService {
 
     @Override
     public void deleteItemsList(long id) {
-        itemsListRepository.deleteById(id);
+        itemsListRepository.delete(getItemsListById(id));
     }
 
     @Override

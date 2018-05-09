@@ -19,13 +19,13 @@ public class ItemServiceImpl implements ItemService {
     private final ItemsListRepository itemsListRepository;
 
     @Override
-    public void addItem(ItemDto itemDto) {
+    public long addItem(ItemDto itemDto) {
         val item = itemDto.toItem();
         item.setItemsList(itemsListRepository
                 .findById(itemDto.getListId())
                 .orElseThrow(() -> NotFoundException.forId(itemDto.getListId()))
         );
-        itemRepository.save(item);
+        return itemRepository.save(item).getId();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void deleteItem(long id) {
-        itemRepository.deleteById(id);
+        itemRepository.delete(getItemById(id));
     }
 
     @Override

@@ -2,6 +2,9 @@ package com.github.rodionovsasha.shoppinglist.dto;
 
 
 import com.github.rodionovsasha.shoppinglist.entities.Item;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,5 +36,16 @@ public class ItemDto implements Serializable {
         item.setName(this.name);
         item.setComment(this.comment);
         return item;
+    }
+
+    @ApiModel("Create Item response")
+    @AllArgsConstructor
+    @Getter
+    public static class Response {
+        @ApiModelProperty(notes = "ID of newly created Item", example = "45326")
+        private final long id;
+
+        @ApiModelProperty(notes = "ID of parent items list", example = "4365")
+        private final long listId;
     }
 }

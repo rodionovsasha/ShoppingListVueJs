@@ -8,11 +8,13 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @ApiResponses({
         @ApiResponse(code = 400, message = "Bad request"),
@@ -31,11 +33,11 @@ public class ItemRestController {
         return itemService.getItemById(id);
     }
 
-    @ApiOperation("Add item")
-    @PostMapping
-    public ResponseEntity<ItemDto> saveItem(@Valid @RequestBody ItemDto itemDto) {
-        itemService.addItem(itemDto);
-        return new ResponseEntity<>(itemDto, HttpStatus.CREATED);
+    @ApiOperation(value = "Add item", response = ItemDto.Response.class)
+    @PostMapping @ResponseStatus(CREATED)
+    public ItemDto.Response saveItem(@Valid @RequestBody ItemDto itemDto) {
+        long id = itemService.addItem(itemDto);
+        return new ItemDto.Response(id, itemDto.getListId());
     }
 
     @ApiOperation("Update item")
@@ -50,14 +52,8 @@ public class ItemRestController {
     }
 
     @ApiOperation("Delete item")
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteItem(@PathVariable final long id) {
-        if (itemService.getItemById(id) == null) {
-            log.error("Item with id " + id + " not found");
-            return ResponseEntity.notFound().build();
-        }
-
+    @DeleteMapping("/{id}") @ResponseStatus(NO_CONTENT)
+    public void deleteItem(@PathVariable final long id) {
         itemService.deleteItem(id);
-        return ResponseEntity.noContent().build();
     }
 }

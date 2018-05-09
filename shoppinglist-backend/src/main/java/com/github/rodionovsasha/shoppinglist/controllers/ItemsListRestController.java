@@ -8,11 +8,13 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @ApiResponses({
         @ApiResponse(code = 400, message = "Bad request"),
@@ -39,11 +41,11 @@ public class ItemsListRestController {
         return itemsListService.getItemsListById(id);
     }
 
-    @ApiOperation("Add list")
-    @PostMapping(ITEMS_LIST_BASE_PATH)
-    public ResponseEntity<ItemsListDto> saveItemsList(@Valid @RequestBody ItemsListDto itemsListDto) {
-        itemsListService.addItemsList(itemsListDto);
-        return new ResponseEntity<>(itemsListDto, HttpStatus.CREATED);
+    @ApiOperation(value = "Add list", response = ItemsListDto.Response.class)
+    @PostMapping(ITEMS_LIST_BASE_PATH) @ResponseStatus(CREATED)
+    public ItemsListDto.Response saveItemsList(@Valid @RequestBody ItemsListDto itemsListDto) {
+        long id = itemsListService.addItemsList(itemsListDto);
+        return new ItemsListDto.Response(id);
     }
 
     @ApiOperation("Update list")
@@ -58,14 +60,8 @@ public class ItemsListRestController {
     }
 
     @ApiOperation("Delete list")
-    @DeleteMapping(ITEMS_LIST_BASE_PATH + "/{id}")
-    public ResponseEntity deleteItemsList(@PathVariable final long id) {
-        if (itemsListService.getItemsListById(id) == null) {
-            log.error("List with id '" + id + "' not found");
-            return ResponseEntity.notFound().build();
-        }
-
+    @DeleteMapping(ITEMS_LIST_BASE_PATH + "/{id}")  @ResponseStatus(NO_CONTENT)
+    public void deleteItemsList(@PathVariable final long id) {
         itemsListService.deleteItemsList(id);
-        return ResponseEntity.noContent().build();
     }
 }
