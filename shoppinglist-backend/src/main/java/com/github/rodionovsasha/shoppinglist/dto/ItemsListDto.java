@@ -37,7 +37,7 @@ public class ItemsListDto implements Serializable {
     @ApiModel("Create Items List response")
     @AllArgsConstructor
     @Getter
-    public static class Response {
+    public static class CreateResponse {
         @ApiModelProperty(notes = "ID of newly created Items List", example = "45326")
         private final long id;
     }

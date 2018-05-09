@@ -33,11 +33,11 @@ public class ItemRestController {
         return itemService.getItemById(id);
     }
 
-    @ApiOperation(value = "Add item", response = ItemDto.Response.class)
+    @ApiOperation(value = "Add item", response = ItemDto.CreateResponse.class)
     @PostMapping @ResponseStatus(CREATED)
-    public ItemDto.Response saveItem(@Valid @RequestBody ItemDto itemDto) {
+    public ItemDto.CreateResponse saveItem(@Valid @RequestBody ItemDto itemDto) {
         long id = itemService.addItem(itemDto);
-        return new ItemDto.Response(id, itemDto.getListId());
+        return new ItemDto.CreateResponse(id, itemDto.getListId());
     }
 
     @ApiOperation("Update item")

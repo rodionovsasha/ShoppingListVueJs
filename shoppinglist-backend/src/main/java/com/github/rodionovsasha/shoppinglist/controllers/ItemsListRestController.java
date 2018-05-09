@@ -41,11 +41,11 @@ public class ItemsListRestController {
         return itemsListService.getItemsListById(id);
     }
 
-    @ApiOperation(value = "Add list", response = ItemsListDto.Response.class)
+    @ApiOperation(value = "Add list", response = ItemsListDto.CreateResponse.class)
     @PostMapping(ITEMS_LIST_BASE_PATH) @ResponseStatus(CREATED)
-    public ItemsListDto.Response saveItemsList(@Valid @RequestBody ItemsListDto itemsListDto) {
+    public ItemsListDto.CreateResponse saveItemsList(@Valid @RequestBody ItemsListDto itemsListDto) {
         long id = itemsListService.addItemsList(itemsListDto);
-        return new ItemsListDto.Response(id);
+        return new ItemsListDto.CreateResponse(id);
     }
 
     @ApiOperation("Update list")
