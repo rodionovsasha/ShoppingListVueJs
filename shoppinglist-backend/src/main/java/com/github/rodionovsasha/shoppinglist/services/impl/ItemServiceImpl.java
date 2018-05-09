@@ -4,8 +4,8 @@ import com.github.rodionovsasha.shoppinglist.dto.ItemDto;
 import com.github.rodionovsasha.shoppinglist.entities.Item;
 import com.github.rodionovsasha.shoppinglist.exceptions.NotFoundException;
 import com.github.rodionovsasha.shoppinglist.repositories.ItemRepository;
-import com.github.rodionovsasha.shoppinglist.repositories.ItemsListRepository;
 import com.github.rodionovsasha.shoppinglist.services.ItemService;
+import com.github.rodionovsasha.shoppinglist.services.ItemsListService;
 import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
@@ -16,23 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
-    private final ItemsListRepository itemsListRepository;
+    private final ItemsListService itemsListService;
 
     @Override
     public long addItem(ItemDto itemDto) {
         val item = itemDto.toItem();
-        item.setItemsList(itemsListRepository
-                .findById(itemDto.getListId())
-                .orElseThrow(() -> NotFoundException.forId(itemDto.getListId()))
-        );
+        item.setItemsList(itemsListService.getItemsListById(itemDto.getListId()));
         return itemRepository.save(item).getId();
     }
 
     @Override
-    public void updateItem(ItemDto itemDto) {
-        val item = itemRepository
-                .findById(itemDto.getId())
-                .orElseThrow(() -> NotFoundException.forId(itemDto.getId()));
+    public void updateItem(long id, ItemDto itemDto) {
+        val item = getItemById(id);
         itemDto.toItem(item);
         itemRepository.save(item);
     }
@@ -50,7 +45,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void toggleBoughtStatus(long itemId) {
-        val item = itemRepository.findById(itemId).orElseThrow(() -> NotFoundException.forId(itemId));
+        val item = getItemById(itemId);
         item.setBought(!item.isBought());
         itemRepository.save(item);
     }

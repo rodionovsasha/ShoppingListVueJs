@@ -1,5 +1,6 @@
 package com.github.rodionovsasha.shoppinglist;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -27,5 +28,10 @@ public class AppConfiguration implements WebMvcConfigurer {
                 .select()
                 .apis(basePackage("com.github.rodionovsasha.shoppinglist.controllers"))
                 .build();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 }

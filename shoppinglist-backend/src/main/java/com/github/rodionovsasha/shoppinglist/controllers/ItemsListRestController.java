@@ -7,8 +7,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,6 +28,8 @@ public class ItemsListRestController {
 
     @Autowired
     private ItemsListService itemsListService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @ApiOperation("Get all lists")
     @GetMapping
@@ -37,8 +39,8 @@ public class ItemsListRestController {
 
     @ApiOperation("Get list")
     @GetMapping(ITEMS_LIST_BASE_PATH + "/{id}")
-    public ItemsList getItemsList(@PathVariable final long id) {
-        return itemsListService.getItemsListById(id);
+    public ItemsListDto.GetResponse getItemsList(@PathVariable long id) {
+        return modelMapper.map(itemsListService.getItemsListById(id), ItemsListDto.GetResponse.class);
     }
 
     @ApiOperation(value = "Add list", response = ItemsListDto.CreateResponse.class)
@@ -49,19 +51,14 @@ public class ItemsListRestController {
     }
 
     @ApiOperation("Update list")
-    @PutMapping(ITEMS_LIST_BASE_PATH)
-    public ResponseEntity editItemsList(@Valid @RequestBody ItemsListDto itemsListDto) {
-        if (itemsListService.getItemsListById(itemsListDto.getId()) == null) {
-            log.error("List with id '" + itemsListDto.getId() + "' not found");
-            return ResponseEntity.notFound().build();
-        }
-        itemsListService.updateItemsList(itemsListDto);
-        return ResponseEntity.ok(itemsListDto);
+    @PutMapping(ITEMS_LIST_BASE_PATH + "/{id}") @ResponseStatus(NO_CONTENT)
+    public void updateItemsList(@PathVariable long id, @Valid @RequestBody ItemsListDto itemsListDto) {
+        itemsListService.updateItemsList(id, itemsListDto);
     }
 
     @ApiOperation("Delete list")
     @DeleteMapping(ITEMS_LIST_BASE_PATH + "/{id}")  @ResponseStatus(NO_CONTENT)
-    public void deleteItemsList(@PathVariable final long id) {
+    public void deleteItemsList(@PathVariable long id) {
         itemsListService.deleteItemsList(id);
     }
 }

@@ -6,7 +6,7 @@ import com.github.rodionovsasha.shoppinglist.entities.ItemsList;
 
 public interface ItemsListService {
     long addItemsList(ItemsListDto itemsListDto);
-    void updateItemsList(ItemsListDto itemsListDto);
+    void updateItemsList(long id, ItemsListDto itemsListDto);
     void deleteItemsList(long id);
     ItemsList getItemsListById(long id);
     Iterable<ItemsList> findAllLists();

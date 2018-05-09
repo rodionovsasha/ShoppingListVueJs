@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,7 +28,7 @@ public class ItemRestController {
 
     @ApiOperation("Get item")
     @GetMapping("/{id}")
-    public Item getItem(@PathVariable final long id) {
+    public Item getItem(@PathVariable long id) {
         return itemService.getItemById(id);
     }
 
@@ -41,19 +40,14 @@ public class ItemRestController {
     }
 
     @ApiOperation("Update item")
-    @PutMapping
-    public ResponseEntity editItem(@Valid @RequestBody ItemDto itemDto) {
-        if (itemService.getItemById(itemDto.getId()) == null) {
-            log.error("Item with id '" + itemDto.getId() + "' not found");
-            return ResponseEntity.notFound().build();
-        }
-        itemService.updateItem(itemDto);
-        return ResponseEntity.ok(itemDto);
+    @PatchMapping("/{id}") @ResponseStatus(NO_CONTENT)
+    public void updateItem(@PathVariable long id, @Valid @RequestBody ItemDto itemDto) {
+        itemService.updateItem(id, itemDto);
     }
 
     @ApiOperation("Delete item")
     @DeleteMapping("/{id}") @ResponseStatus(NO_CONTENT)
-    public void deleteItem(@PathVariable final long id) {
+    public void deleteItem(@PathVariable long id) {
         itemService.deleteItem(id);
     }
 }

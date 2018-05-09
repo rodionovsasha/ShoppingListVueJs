@@ -23,10 +23,8 @@ public class ItemsListServiceImpl implements ItemsListService {
     }
 
     @Override
-    public void updateItemsList(ItemsListDto itemsListDto) {
-        val itemsList = itemsListRepository
-                .findById(itemsListDto.getId())
-                .orElseThrow(() -> NotFoundException.forId(itemsListDto.getId()));
+    public void updateItemsList(long id, ItemsListDto itemsListDto) {
+        val itemsList = getItemsListById(id);
         itemsListDto.toItemsList(itemsList);
         itemsListRepository.save(itemsList);
     }
