@@ -17,6 +17,7 @@ public class ItemsListServiceImpl implements ItemsListService {
 
     @Override
     public long addItemsList(ItemsList itemsList) {
+        itemsList.setId(0);
         return itemsListRepository.save(itemsList).getId();
     }
 

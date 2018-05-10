@@ -20,6 +20,10 @@ public class Item {
     private String comment;
     private boolean isBought;
 
+    public Item(String name) {
+        this.name = name;
+    }
+
     @ManyToOne @JoinColumn
     private ItemsList itemsList;
 }

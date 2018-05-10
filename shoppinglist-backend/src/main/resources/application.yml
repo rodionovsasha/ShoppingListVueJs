@@ -1,12 +1,17 @@
 server:
- port: ${port:8000}
+ port: ${port:8002}
  servlet:
    context-path: /api/v1
 
 spring:
+  banner:
+    image:
+      width: 35
   output:
     ansi:
       enabled: ALWAYS
+  jackson:
+      defaultPropertyInclusion: NON_NULL
 
 logging:
   file: shoppingList.log

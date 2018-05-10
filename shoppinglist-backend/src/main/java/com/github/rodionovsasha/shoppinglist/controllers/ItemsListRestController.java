@@ -69,7 +69,7 @@ public class ItemsListRestController {
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Items list not found")
     })
-    @PatchMapping(ITEMS_LIST_BASE_PATH + "/{id}")
+    @PutMapping(ITEMS_LIST_BASE_PATH + "/{id}")
     @ResponseStatus(NO_CONTENT)
     public void updateItemsList(@PathVariable long id, @Valid @RequestBody ItemsListDto request) {
         itemsListService.updateItemsList(id, request.getName());

@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,23 +25,27 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class ItemRestController {
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private ModelMapper modelMapper;
 
-    @ApiOperation("Get item")
+    @ApiOperation(value = "Get item", response = ItemDto.GetResponse.class)
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Item not found")
     })
     @GetMapping("/{id}")
-    public Item getItem(@PathVariable long id) {
-        return itemService.getItemById(id);
+    public ItemDto.GetResponse getItem(@PathVariable long id) {
+        return modelMapper.map(itemService.getItemById(id), ItemDto.GetResponse.class);
     }
 
     @ApiOperation(value = "Add item", response = ItemDto.CreateResponse.class)
     @ApiResponses(@ApiResponse(code = 400, message = "Bad request"))
     @PostMapping @ResponseStatus(CREATED)
-    public ItemDto.CreateResponse saveItem(@Valid @RequestBody ItemDto itemDto) {
-        long id = itemService.addItem(itemDto);
-        return new ItemDto.CreateResponse(id, itemDto.getListId());
+    public ItemDto.CreateResponse addItem(@Valid @RequestBody ItemDto request) {
+        Item item = modelMapper.map(request, Item.class);
+        long listId = request.getListId();
+        long id = itemService.addItem(listId, item);
+        return new ItemDto.CreateResponse(id, listId);
     }
 
     @ApiOperation("Update item")
@@ -48,9 +53,10 @@ public class ItemRestController {
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Item not found")
     })
-    @PatchMapping("/{id}") @ResponseStatus(NO_CONTENT)
-    public void updateItem(@PathVariable long id, @Valid @RequestBody ItemDto itemDto) {
-        itemService.updateItem(id, itemDto);
+    @PutMapping("/{id}") @ResponseStatus(NO_CONTENT)
+    public void updateItem(@PathVariable long id, @Valid @RequestBody ItemDto request) {
+        Item item = modelMapper.map(request, Item.class);
+        itemService.updateItem(id, request.getListId(), item);
     }
 
     @ApiOperation("Delete item")

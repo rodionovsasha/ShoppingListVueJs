@@ -1,6 +1,6 @@
 package com.github.rodionovsasha.shoppinglist;
 
-import com.github.rodionovsasha.shoppinglist.dto.ItemDto;
+import com.github.rodionovsasha.shoppinglist.entities.Item;
 import com.github.rodionovsasha.shoppinglist.entities.ItemsList;
 import com.github.rodionovsasha.shoppinglist.services.ItemService;
 import com.github.rodionovsasha.shoppinglist.services.ItemsListService;
@@ -21,18 +21,14 @@ public class Application {
     CommandLineRunner runner(ItemsListService itemsListService, ItemService itemService) {
         return args -> {
             asList("Shopping list 1", "Shopping list 2", "Shopping list 3")
-                    .forEach(name -> {
-                        ItemsList itemsList = new ItemsList();
-                        itemsList.setName(name);
-                        itemsListService.addItemsList(itemsList);
-                    });
+                    .forEach(name -> itemsListService.addItemsList(new ItemsList(name)));
 
             asList("Oranges 1kg", "Item2", "Item3", "Item1")
-                    .forEach(name -> itemService.addItem(new ItemDto(1, name)));
+                    .forEach(name -> itemService.addItem(1, new Item(name)));
             asList("Milk", "Apples 2kg", "Bread")
-                    .forEach(name -> itemService.addItem(new ItemDto(2, name)));
+                    .forEach(name -> itemService.addItem(2, new Item(name)));
             asList("Meat 2kg", "Item2")
-                    .forEach(name -> itemService.addItem(new ItemDto(3, name)));
+                    .forEach(name -> itemService.addItem(3, new Item(name)));
         };
     }
 }
