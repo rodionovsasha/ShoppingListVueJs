@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import springfox.documentation.service.Tag;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -25,6 +26,8 @@ public class AppConfiguration implements WebMvcConfigurer {
     protected Docket swaggerApi() {
         return new Docket(SWAGGER_2)
                 .useDefaultResponseMessages(false)
+                .tags(new Tag("Items List", "Various operations on items list"),
+                        new Tag("Item", "Various operations on item"))
                 .select()
                 .apis(basePackage("com.github.rodionovsasha.shoppinglist.controllers"))
                 .build();

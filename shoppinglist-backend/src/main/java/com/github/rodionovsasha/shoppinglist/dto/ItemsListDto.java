@@ -1,7 +1,6 @@
 package com.github.rodionovsasha.shoppinglist.dto;
 
 
-import com.github.rodionovsasha.shoppinglist.entities.ItemsList;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -14,24 +13,20 @@ import java.io.Serializable;
 import java.util.List;
 
 @Getter @Setter
-@NoArgsConstructor
 public class ItemsListDto implements Serializable {
     private static final long serialVersionUID = 1;
 
     @NotEmpty
     private String name;
 
-    public ItemsListDto(String name) {
-        this.name = name;
-    }
-
-    public ItemsList toItemsList() {
-        return toItemsList(new ItemsList());
-    }
-
-    public ItemsList toItemsList(ItemsList itemsList) {
-        itemsList.setName(this.name);
-        return itemsList;
+    @ApiModel("Get all lists response")
+    @NoArgsConstructor
+    @Setter @Getter
+    public static class GetAllListsResponse {
+        @ApiModelProperty(notes = "Items List ID", example = "45326")
+        private long id;
+        @ApiModelProperty(notes = "Items List name", example = "Shopping list")
+        private String name;
     }
 
     @ApiModel("Get Items List response")

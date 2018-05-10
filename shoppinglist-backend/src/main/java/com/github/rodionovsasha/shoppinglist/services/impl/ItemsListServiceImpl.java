@@ -1,12 +1,10 @@
 package com.github.rodionovsasha.shoppinglist.services.impl;
 
-import com.github.rodionovsasha.shoppinglist.dto.ItemsListDto;
 import com.github.rodionovsasha.shoppinglist.entities.ItemsList;
 import com.github.rodionovsasha.shoppinglist.exceptions.NotFoundException;
 import com.github.rodionovsasha.shoppinglist.repositories.ItemsListRepository;
 import com.github.rodionovsasha.shoppinglist.services.ItemsListService;
 import lombok.AllArgsConstructor;
-import lombok.val;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,14 +16,14 @@ public class ItemsListServiceImpl implements ItemsListService {
     private final ItemsListRepository itemsListRepository;
 
     @Override
-    public long addItemsList(ItemsListDto itemsListDto) {
-        return itemsListRepository.save(itemsListDto.toItemsList()).getId();
+    public long addItemsList(ItemsList itemsList) {
+        return itemsListRepository.save(itemsList).getId();
     }
 
     @Override
-    public void updateItemsList(long id, ItemsListDto itemsListDto) {
-        val itemsList = getItemsListById(id);
-        itemsListDto.toItemsList(itemsList);
+    public void updateItemsList(long id, String name) {
+        ItemsList itemsList = getItemsListById(id);
+        itemsList.setName(name);
         itemsListRepository.save(itemsList);
     }
 

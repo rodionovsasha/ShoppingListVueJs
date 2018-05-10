@@ -1,7 +1,7 @@
 package com.github.rodionovsasha.shoppinglist;
 
 import com.github.rodionovsasha.shoppinglist.dto.ItemDto;
-import com.github.rodionovsasha.shoppinglist.dto.ItemsListDto;
+import com.github.rodionovsasha.shoppinglist.entities.ItemsList;
 import com.github.rodionovsasha.shoppinglist.services.ItemService;
 import com.github.rodionovsasha.shoppinglist.services.ItemsListService;
 import org.springframework.boot.CommandLineRunner;
@@ -21,7 +21,11 @@ public class Application {
     CommandLineRunner runner(ItemsListService itemsListService, ItemService itemService) {
         return args -> {
             asList("Shopping list 1", "Shopping list 2", "Shopping list 3")
-                    .forEach(name -> itemsListService.addItemsList(new ItemsListDto(name)));
+                    .forEach(name -> {
+                        ItemsList itemsList = new ItemsList();
+                        itemsList.setName(name);
+                        itemsListService.addItemsList(itemsList);
+                    });
 
             asList("Oranges 1kg", "Item2", "Item3", "Item1")
                     .forEach(name -> itemService.addItem(new ItemDto(1, name)));
