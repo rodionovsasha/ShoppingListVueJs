@@ -19,7 +19,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public long addItem(long listId, Item item) {
-        item.setId(0);
+        item.setId(0); // for some reason model mapper returns ItemsList with id == 1
         item.setItemsList(itemsListService.getItemsListById(listId));
         return itemRepository.save(item).getId();
     }
