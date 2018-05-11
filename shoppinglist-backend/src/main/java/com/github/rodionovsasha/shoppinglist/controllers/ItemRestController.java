@@ -59,6 +59,16 @@ public class ItemRestController {
         itemService.updateItem(id, request.getListId(), item);
     }
 
+    @ApiOperation(value = "Mark item as bought / not bought")
+    @ApiResponses({
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Item not found")
+    })
+    @PatchMapping("/{id}/buy")
+    public void toggleItemBoughtStatus(@PathVariable("id") long id) {
+        itemService.toggleBoughtStatus(id);
+    }
+
     @ApiOperation("Delete item")
     @ApiResponses({
             @ApiResponse(code = 400, message = "Bad request"),
