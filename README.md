@@ -11,6 +11,11 @@ or using wrapper
 ./mvnw clean install
 </pre>
 
+Build only backend:
+<pre>
+mvn --projects shoppinglist-backend clean install
+</pre>
+
 ### Run backend
 <pre>
 mvn --projects shoppinglist-backend spring-boot:run
