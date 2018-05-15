@@ -24,7 +24,11 @@ public class Application {
                     .forEach(name -> itemsListService.addItemsList(new ItemsList(name)));
 
             asList("Oranges 1kg", "Item2", "Item3", "Item1")
-                    .forEach(name -> itemService.addItem(1, new Item(name)));
+                    .forEach(name -> {
+                        Item item = new Item(name);
+                        item.setComment("comment");
+                        itemService.addItem(1, item);
+                    });
             asList("Milk", "Apples 2kg", "Bread")
                     .forEach(name -> itemService.addItem(2, new Item(name)));
             asList("Meat 2kg", "Item2")

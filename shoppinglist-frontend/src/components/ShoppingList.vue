@@ -1,10 +1,10 @@
 <template>
-  <div class="col-md-6 offset-md-3" v-if="error">
-    <div class="alert alert-danger" role="alert">
-      <strong>Service unavailable.</strong> Please try back later.
+  <div class="col-md-6 offset-md-3">
+    <div v-if="error">
+      <div class="alert alert-danger" role="alert">
+        <strong>{{ message }}</strong>
+      </div>
     </div>
-  </div>
-  <div class="col-md-6 offset-md-3" v-else>
     <h1>Shopping list</h1>
     <div v-if="loading">Loading...</div>
     <ul class="list-unstyled" v-else>
@@ -32,7 +32,8 @@ export default {
     return {
       itemsLists: [],
       loading: true,
-      error: false
+      error: false,
+      message: ''
     }
   },
   mounted () {
@@ -40,10 +41,12 @@ export default {
       .then(response => {
         this.itemsLists = response.data
         this.loading = false
+        this.error = false
       })
       .catch(error => {
         console.log(error)
         this.error = true
+        this.message = error.toString()
         this.loading = false
       })
   },
@@ -51,19 +54,21 @@ export default {
     confirmDelete: function (id, index) {
       this.$dialog.confirm('Are you sure you want to delete this list?')
         .then(() => {
-          console.log('Deletion confirmed')
+          console.log('Delete clicked')
           AXIOS.delete('/itemsList/' + id)
             .then(() => {
-              // remove list from view
+              // remove list from array
               this.itemsLists.splice(index, 1)
+              this.error = false
             })
             .catch(error => {
               console.log(error)
               this.error = true
+              this.message = error.toString()
             })
         })
         .catch(function () {
-          console.log('Deletion canceled')
+          console.log('Cancel delete clicked')
         })
     }
   }
