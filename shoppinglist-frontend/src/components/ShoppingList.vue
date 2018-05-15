@@ -1,10 +1,7 @@
 <template>
   <div class="col-md-6 offset-md-3">
-    <div v-if="error">
-      <div class="alert alert-danger" role="alert">
-        <strong>{{ message }}</strong>
-      </div>
-    </div>
+    <error-alert v-if="error" v-bind:message="message"/>
+
     <h1>Shopping list</h1>
     <div v-if="loading">Loading...</div>
     <ul class="list-unstyled" v-else>
@@ -25,9 +22,11 @@
 
 <script>
 import {AXIOS} from './http-common'
+import ErrorAlert from './ErrorAlert'
 
 export default {
   name: 'ShoppingList',
+  components: {ErrorAlert},
   data () {
     return {
       itemsLists: [],

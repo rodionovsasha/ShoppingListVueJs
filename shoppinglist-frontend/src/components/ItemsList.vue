@@ -1,11 +1,9 @@
 <template>
   <div class="col-md-6 offset-md-3">
-    <div v-if="error">
-      <div class="alert alert-danger" role="alert">
-        <strong>{{ message }}</strong>
-      </div>
-    </div>
-    <div class="list-group">
+    <error-alert v-if="error" v-bind:message="message"/>
+
+    <div v-if="loading">Loading...</div>
+    <div class="list-group" v-else>
       <h1 class="list-group-item list-group-item-info">{{ list.name }} <span class="badge badge-light">{{ list.items.length }}</span></h1>
       <div class="list-group-item" v-for="(item, index) in list.items" v-bind:key="item.id" v-bind:class="{ 'list-group-item-success': item.bought }">
         <div class="row">
@@ -58,9 +56,11 @@
 
 <script>
 import {AXIOS} from './http-common'
+import ErrorAlert from './ErrorAlert'
 
 export default {
   name: 'ItemsList',
+  components: {ErrorAlert},
   props: ['id'],
   data () {
     return {
@@ -75,6 +75,7 @@ export default {
       .then(response => {
         this.list = response.data
         this.loading = false
+        this.error = false
       })
       .catch(error => {
         console.log(error)
@@ -88,12 +89,14 @@ export default {
         .then(() => {
           console.log('Buy clicked')
           this.error = false
+          this.loading = false
           this.list.items[index].bought = !this.list.items[index].bought
         })
         .catch(error => {
           console.log(error)
           this.error = true
           this.message = error.toString()
+          this.loading = false
         })
     },
     confirmDelete: function (id, index) {
