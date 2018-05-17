@@ -9,7 +9,7 @@
         <p>
           <router-link v-bind:to="{ path: '/itemsList/' + list.id }" class="btn btn-outline-secondary">{{ list.name }}</router-link>
           <a v-bind:href="'/#/itemsList/edit?id=' + list.id" class="btn btn-warning btn-sm">Edit</a>
-          <a href="#" class="btn btn-danger btn-sm" @click.prevent="confirmDelete(list.id, index)">Delete</a>
+          <a href="#" class="btn btn-danger btn-sm" @click.prevent="confirmDeleteList(index, list.id)">Delete</a>
         </p>
       </li>
     </ul>
@@ -49,7 +49,7 @@ export default {
       })
   },
   methods: {
-    confirmDelete: function (id, index) {
+    confirmDeleteList: function (id, index) {
       this.$dialog.confirm('Are you sure you want to delete this list?')
         .then(() => {
           console.log('Delete clicked')

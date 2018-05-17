@@ -22,7 +22,7 @@
                 <router-link to="{ path: '/item/edit', params: {id: item.id} }" class="badge badge-warning" role="button">Edit</router-link>
               </li>
               <li class="list-inline-item">
-                <a href="#" class="badge badge-danger" role="button" @click.prevent="confirmDelete(item.id, index)">Delete</a>
+                <a href="#" class="badge badge-danger" role="button" @click.prevent="confirmDeleteItem(item.id, index)">Delete</a>
               </li>
             </ul>
           </div>
@@ -31,7 +31,7 @@
     </div>
     <ul class="list-inline">
       <li class="list-inline-item">
-        <router-link v-bind:to="{ path: '/addItem/' + this.id }" class="btn btn-success btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="Add a new item">
+        <router-link v-bind:to="{ path: '/addItem/' + this.listId }" class="btn btn-success btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="Add a new item">
           <span class="oi oi-plus"></span>
         </router-link>
       </li>
@@ -41,9 +41,9 @@
         </router-link>
       </li>
       <li class="list-inline-item">
-        <router-link to="{ path: '/itemsList/delete/' + item.itemsList }" onclick="return confirm('Are you sure you want to delete this list?')" class="btn btn-danger btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="Delete list">
+        <a href="#" class="btn btn-danger btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="Delete list" @click.prevent="confirmDeleteList(listId)">
           <span class="oi oi-x"></span>
-        </router-link>
+        </a>
       </li>
       <all-lists-button/>
     </ul>
@@ -58,7 +58,7 @@ import ErrorAlert from './ErrorAlert'
 export default {
   name: 'ItemsList',
   components: {AllListsButton, ErrorAlert},
-  props: ['id'],
+  props: ['listId'],
   data () {
     return {
       list: [],
@@ -68,7 +68,7 @@ export default {
     }
   },
   mounted () {
-    AXIOS.get('/itemsList/' + this.id)
+    AXIOS.get('/itemsList/' + this.listId)
       .then(response => {
         this.list = response.data
         this.loading = false
@@ -96,7 +96,7 @@ export default {
           this.loading = false
         })
     },
-    confirmDelete: function (id, index) {
+    confirmDeleteItem: function (id, index) {
       this.$dialog.confirm('Are you sure you want to delete this item?')
         .then(() => {
           console.log('Delete clicked')
@@ -104,6 +104,25 @@ export default {
             .then(() => {
               // remove item from array
               this.list.items.splice(index, 1)
+              this.error = false
+            })
+            .catch(error => {
+              console.log(error)
+              this.error = true
+              this.message = error.toString()
+            })
+        })
+        .catch(function () {
+          console.log('Cancel delete clicked')
+        })
+    },
+    confirmDeleteList: function (id) {
+      this.$dialog.confirm('Are you sure you want to delete this list?')
+        .then(() => {
+          console.log('Delete clicked')
+          AXIOS.delete('/itemsList/' + id)
+            .then(() => {
+              this.$router.push('/')
               this.error = false
             })
             .catch(error => {

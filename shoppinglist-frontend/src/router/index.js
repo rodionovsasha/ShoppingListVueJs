@@ -15,7 +15,7 @@ export default new Router({
       component: ShoppingList
     },
     {
-      path: '/itemsList/:id',
+      path: '/itemsList/:listId',
       name: 'ItemsList',
       component: ItemsList,
       props: true
