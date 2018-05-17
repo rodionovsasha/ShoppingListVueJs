@@ -31,7 +31,7 @@
     </div>
     <ul class="list-inline">
       <li class="list-inline-item">
-        <router-link to="{ path: '/item/add/', params: { listId: item.itemsList } }" class="btn btn-success btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="Add new item">
+        <router-link v-bind:to="{ path: '/addItem/' + this.id }" class="btn btn-success btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="Add a new item">
           <span class="oi oi-plus"></span>
         </router-link>
       </li>

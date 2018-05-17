@@ -2,23 +2,33 @@
   <div class="col-md-6 offset-md-3">
     <error-alert v-if="error" v-bind:message="message"/>
 
-    <h1>Add a new shopping list</h1>
-    <form @submit.prevent="addItemsList" method="post" class="form-horizontal" @keydown="fieldErrors.clear($event.target.name)">
+    <h1>Add a new item</h1>
+    <form @submit.prevent="addItem" method="post" class="form-horizontal" @keydown="fieldErrors.clear($event.target.name)">
       <div class="form-group">
-        <label for="name" class="col-sm-1 control-label">Name:</label>
+        <label for="name" class="col-sm-2 control-label">Name:</label>
         <div class="col-sm-6">
           <input type="text" id="name" name="name" v-model="name" class="form-control"/>
           <small v-if="fieldErrors.has('name')" class="text-danger" v-text="fieldErrors.get('name')"></small>
         </div>
       </div>
       <div class="form-group">
-        <div class="col-sm-offset-1 col-sm-10">
-          <input type="submit" value="Add list" class="btn btn-outline-secondary" :disabled="fieldErrors.any()"/>
+        <label for="comment" class="col-sm-2 control-label">Comment:</label>
+        <div class="col-sm-6">
+          <textarea id="comment" name="comment" v-model="comment" rows="3" class="form-control"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <input type="submit" value="Add item" class="btn btn-outline-secondary" :disabled="fieldErrors.any()"/>
         </div>
       </div>
     </form>
-
     <ul class="list-inline">
+      <li class="list-inline-item">
+        <router-link v-bind:to="{ path: '/itemsList/' + this.listId }" class="btn btn-info btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="Back to the list">
+          <span class="oi oi-arrow-thick-left"></span>
+        </router-link>
+      </li>
       <all-lists-button/>
     </ul>
   </div>
@@ -31,32 +41,34 @@ import AllListsButton from './AllListsButton'
 import FieldErrors from './FieldErrors'
 
 export default {
-  name: 'AddItemsList',
+  name: 'AddItem',
   components: {AllListsButton, ErrorAlert},
+  props: ['listId'],
   data () {
     return {
       name: '',
+      comment: '',
       error: false,
       fieldErrors: new FieldErrors(),
       message: ''
     }
   },
   methods: {
-    addItemsList: function () {
-      AXIOS.post('/itemsList', {
-        name: this.name
+    addItem: function () {
+      AXIOS.post('/item', {
+        name: this.name,
+        comment: this.comment,
+        listId: this.listId
       })
         .then(() => {
-          this.$router.push('/')
+          this.$router.push('/itemsList/' + this.listId)
         })
         .catch(error => {
           if (!error.response) {
-            // global error, for example: backend is not running
             console.log(error)
             this.error = true
             this.message = error.toString()
           } else {
-            // validation errors, for example: name must not be blank
             this.fieldErrors.set(error.response.data)
             console.log(this.fieldErrors)
           }

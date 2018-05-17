@@ -6,6 +6,6 @@ describe('ShoppingList.vue', () => {
     const Constructor = Vue.extend(ShoppingList);
     const vm = new Constructor().$mount();
     expect(vm.$el.querySelector('h1').textContent)
-      .toEqual('Shopping list')
+      .toEqual('Shopping lists')
   })
 });

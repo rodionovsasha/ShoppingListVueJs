@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import ShoppingList from '@/components/ShoppingList'
 import ItemsList from '@/components/ItemsList'
 import AddItemsList from '@/components/AddItemsList'
+import AddItem from '@/components/AddItem'
 
 Vue.use(Router)
 
@@ -22,7 +23,12 @@ export default new Router({
     {
       path: '/addItemsList',
       name: 'AddItemsList',
-      component: AddItemsList,
+      component: AddItemsList
+    },
+    {
+      path: '/addItem/:listId',
+      name: 'AddItem',
+      component: AddItem,
       props: true
     }
   ]
