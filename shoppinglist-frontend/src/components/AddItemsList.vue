@@ -19,11 +19,7 @@
     </form>
 
     <ul class="list-inline">
-      <li class="list-inline-item">
-        <router-link to="/" class="btn btn-info btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="All lists">
-          <span class="oi oi-list"></span>
-        </router-link>
-      </li>
+      <all-lists-button/>
     </ul>
   </div>
 </template>
@@ -31,11 +27,12 @@
 <script>
 import {AXIOS} from './http-common'
 import ErrorAlert from './ErrorAlert'
+import AllListsButton from './AllListsButton'
 import FieldErrors from './FieldErrors'
 
 export default {
   name: 'AddItemsList',
-  components: {ErrorAlert},
+  components: {AllListsButton, ErrorAlert},
   data () {
     return {
       name: '',
@@ -49,9 +46,9 @@ export default {
       AXIOS.post('/itemsList', {
         name: this.name
       })
-        .then(
+        .then(() => {
           this.$router.push('/')
-        )
+        })
         .catch(error => {
           if (!error.response) {
             // global error, for example: backend is not running

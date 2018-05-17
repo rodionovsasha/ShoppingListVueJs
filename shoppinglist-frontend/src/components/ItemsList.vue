@@ -45,22 +45,19 @@
           <span class="oi oi-x"></span>
         </router-link>
       </li>
-      <li class="list-inline-item">
-        <router-link to="/" class="btn btn-info btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="All lists">
-          <span class="oi oi-list"></span>
-        </router-link>
-      </li>
+      <all-lists-button/>
     </ul>
   </div>
 </template>
 
 <script>
 import {AXIOS} from './http-common'
+import AllListsButton from './AllListsButton'
 import ErrorAlert from './ErrorAlert'
 
 export default {
   name: 'ItemsList',
-  components: {ErrorAlert},
+  components: {AllListsButton, ErrorAlert},
   props: ['id'],
   data () {
     return {

@@ -5,8 +5,8 @@
     </div>
   </div>
 </template>
-<script>
 
+<script>
 export default {
   name: 'ErrorAlert',
   props: ['message']
