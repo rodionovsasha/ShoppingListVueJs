@@ -37,11 +37,7 @@
       </div>
     </div>
     <ul class="list-inline">
-      <li class="list-inline-item">
-        <router-link v-bind:to="{ path: '/itemsList/' + this.listId }" class="btn btn-info btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="Back to the list">
-          <span class="oi oi-arrow-thick-left"></span>
-        </router-link>
-      </li>
+      <back-to-list-button v-bind:list-id="this.listId"/>
       <all-lists-button/>
       <li class="list-inline-item">
         <router-link v-bind:to="{ path: '/editItem/' + itemId }" class="btn btn-warning btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="Edit item">
@@ -61,11 +57,12 @@
 import {AXIOS} from './http-common'
 import ErrorAlert from './ErrorAlert'
 import AllListsButton from './AllListsButton'
+import BackToListButton from './BackToListButton'
 import FieldErrors from './FieldErrors'
 
 export default {
   name: 'Item',
-  components: {AllListsButton, ErrorAlert},
+  components: {BackToListButton, AllListsButton, ErrorAlert},
   props: ['itemId'],
   data () {
     return {
