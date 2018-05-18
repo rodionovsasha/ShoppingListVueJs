@@ -36,7 +36,7 @@
         </router-link>
       </li>
       <li class="list-inline-item">
-        <router-link to="{ path: '/itemsList/edit/' + item.itemsList }" class="btn btn-warning btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="Edit list">
+        <router-link v-bind:to="{ path: '/editItemsList/' + list.id }" class="btn btn-warning btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="Edit list">
           <span class="oi oi-pencil"></span>
         </router-link>
       </li>
