@@ -5,6 +5,7 @@ import ItemsList from '@/components/ItemsList'
 import AddItemsList from '@/components/AddItemsList'
 import EditItemsList from '@/components/EditItemsList'
 import AddItem from '@/components/AddItem'
+import EditItem from '@/components/EditItem'
 
 Vue.use(Router)
 
@@ -36,6 +37,12 @@ export default new Router({
       path: '/addItem/:listId',
       name: 'AddItem',
       component: AddItem,
+      props: true
+    },
+    {
+      path: '/editItem/:itemId',
+      name: 'EditItem',
+      component: EditItem,
       props: true
     }
   ]

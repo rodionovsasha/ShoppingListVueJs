@@ -19,7 +19,7 @@
                 </a>
               </li>
               <li class="list-inline-item">
-                <router-link to="{ path: '/item/edit', params: {id: item.id} }" class="badge badge-warning" role="button">Edit</router-link>
+                <router-link v-bind:to="{ path: '/editItem/' + item.id }" class="badge badge-warning" role="button">Edit</router-link>
               </li>
               <li class="list-inline-item">
                 <a href="#" class="badge badge-danger" role="button" @click.prevent="confirmDeleteItem(item.id, index)">Delete</a>
