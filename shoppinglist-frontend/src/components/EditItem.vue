@@ -2,19 +2,19 @@
   <div class="col-md-6 offset-md-3">
     <error-alert v-if="error" v-bind:message="message"/>
 
-    <h1>Edit {{this.name}}</h1>
+    <h1>Edit {{this.item.name}}</h1>
     <form @submit.prevent="editItem" method="post" class="form-horizontal" @keydown="fieldErrors.clear($event.target.name)">
       <div class="form-group">
         <label for="name" class="col-sm-2 control-label">Name:</label>
         <div class="col-sm-6">
-          <input type="text" id="name" name="name" v-model="name" class="form-control"/>
+          <input type="text" id="name" name="name" v-model="item.name" class="form-control"/>
           <small v-if="fieldErrors.has('name')" class="text-danger" v-text="fieldErrors.get('name')"></small>
         </div>
       </div>
       <div class="form-group">
         <label for="comment" class="col-sm-2 control-label">Comment:</label>
         <div class="col-sm-6">
-          <textarea id="comment" name="comment" v-model="comment" rows="3" class="form-control"></textarea>
+          <textarea id="comment" name="comment" v-model="item.comment" rows="3" class="form-control"></textarea>
         </div>
       </div>
       <div class="form-group">
@@ -24,7 +24,7 @@
       </div>
     </form>
     <ul class="list-inline">
-      <back-to-list-button v-bind:list-id="this.listId"/>
+      <back-to-list-button v-bind:list-id="this.item.listId"/>
       <all-lists-button/>
     </ul>
   </div>
@@ -35,7 +35,8 @@ import {AXIOS} from './http-common'
 import ErrorAlert from './ErrorAlert'
 import AllListsButton from './AllListsButton'
 import BackToListButton from './BackToListButton'
-import FieldErrors from './FieldErrors'
+import FieldErrors from './classes/FieldErrors'
+import Item from './classes/Item'
 
 export default {
   name: 'EditItem',
@@ -43,9 +44,7 @@ export default {
   props: ['itemId'],
   data () {
     return {
-      name: '',
-      comment: '',
-      listId: '',
+      item: {},
       error: false,
       fieldErrors: new FieldErrors(),
       message: ''
@@ -54,9 +53,7 @@ export default {
   mounted () {
     AXIOS.get('/item/' + this.itemId)
       .then(response => {
-        this.name = response.data.name
-        this.comment = response.data.comment
-        this.listId = response.data.listId
+        this.item = new Item(response.data)
         this.error = false
       })
       .catch(error => {
@@ -67,12 +64,12 @@ export default {
   methods: {
     editItem: function () {
       AXIOS.put('/item/' + this.itemId, {
-        name: this.name,
-        comment: this.comment,
-        listId: this.listId
+        name: this.item.name,
+        comment: this.item.comment,
+        listId: this.item.listId
       })
         .then(() => {
-          this.$router.push('/itemsList/' + this.listId)
+          this.$router.push('/itemsList/' + this.item.listId)
         })
         .catch(error => {
           if (!error.response) {

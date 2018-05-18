@@ -4,7 +4,7 @@
 
     <div v-if="loading">Loading...</div>
     <div class="list-group" v-else>
-      <h1 v-text="this.name" class="list-group-item list-group-item-info"></h1>
+      <h1 v-text="this.item.name" class="list-group-item list-group-item-info"></h1>
       <div class="list-group-item">
         <div class="row">
           <div class="col-md-7">
@@ -15,13 +15,13 @@
           </div>
         </div>
       </div>
-      <div class="list-group-item" v-if="this.comment">
+      <div class="list-group-item" v-if="this.item.comment">
         <div class="row">
           <div class="col-md-7">
             <strong>Comment</strong>
           </div>
           <div class="col-md-5">
-            <em v-text="this.comment"></em>
+            <em v-text="this.item.comment"></em>
           </div>
         </div>
       </div>
@@ -31,13 +31,13 @@
             <strong>Bought</strong>
           </div>
           <div class="col-md-5">
-            <strong>{{ this.bought ? 'Yes' : 'No' }}</strong>
+            <strong>{{ this.item.bought ? 'Yes' : 'No' }}</strong>
           </div>
         </div>
       </div>
     </div>
     <ul class="list-inline">
-      <back-to-list-button v-bind:list-id="this.listId"/>
+      <back-to-list-button v-bind:list-id="this.item.listId"/>
       <all-lists-button/>
       <li class="list-inline-item">
         <router-link v-bind:to="{ path: '/editItem/' + itemId }" class="btn btn-warning btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="Edit item">
@@ -58,7 +58,7 @@ import {AXIOS} from './http-common'
 import ErrorAlert from './ErrorAlert'
 import AllListsButton from './AllListsButton'
 import BackToListButton from './BackToListButton'
-import FieldErrors from './FieldErrors'
+import Item from './classes/Item'
 
 export default {
   name: 'Item',
@@ -66,23 +66,16 @@ export default {
   props: ['itemId'],
   data () {
     return {
-      name: '',
-      comment: '',
-      bought: false,
-      listId: '',
+      item: {},
       loading: true,
       error: false,
-      fieldErrors: new FieldErrors(),
       message: ''
     }
   },
   mounted () {
     AXIOS.get('/item/' + this.itemId)
       .then(response => {
-        this.name = response.data.name
-        this.comment = response.data.comment
-        this.bought = response.data.bought
-        this.listId = response.data.listId
+        this.item = new Item(response.data)
         this.loading = false
         this.error = false
       })
@@ -100,7 +93,7 @@ export default {
           console.log('Delete clicked')
           AXIOS.delete('/item/' + id)
             .then(() => {
-              this.$router.push('/itemsList/' + this.listId)
+              this.$router.push('/itemsList/' + this.item.listId)
             })
             .catch(error => {
               console.log(error)

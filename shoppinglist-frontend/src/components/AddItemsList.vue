@@ -28,7 +28,7 @@
 import {AXIOS} from './http-common'
 import ErrorAlert from './ErrorAlert'
 import AllListsButton from './AllListsButton'
-import FieldErrors from './FieldErrors'
+import FieldErrors from './classes/FieldErrors'
 
 export default {
   name: 'AddItemsList',
