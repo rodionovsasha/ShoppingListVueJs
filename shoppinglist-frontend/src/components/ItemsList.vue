@@ -4,8 +4,8 @@
 
     <div v-if="loading">Loading...</div>
     <div class="list-group" v-else>
-      <h1 class="list-group-item list-group-item-info">{{ list.name }} <span class="badge badge-light">{{ list.items.length }}</span></h1>
-      <div class="list-group-item" v-for="(item, index) in list.items" v-bind:key="item.id" v-bind:class="{ 'list-group-item-success': item.bought }">
+      <h1 class="list-group-item list-group-item-info">{{ this.list.name }} <span class="badge badge-light">{{ this.list.items.length }}</span></h1>
+      <div class="list-group-item" v-for="(item, index) in this.list.items" v-bind:key="item.id" v-bind:class="{ 'list-group-item-success': item.bought }">
         <div class="row">
           <div class="col-md-7">
             <router-link v-bind:to="{ path: '/item/' + item.id }">{{ item.name }}</router-link>
@@ -36,7 +36,7 @@
         </router-link>
       </li>
       <li class="list-inline-item">
-        <router-link v-bind:to="{ path: '/editItemsList/' + list.id }" class="btn btn-warning btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="Edit list">
+        <router-link v-bind:to="{ path: '/editItemsList/' + this.listId }" class="btn btn-warning btn-sm" role="button" data-toggle="tooltip" data-placement="bottom" title="Edit list">
           <span class="oi oi-pencil"></span>
         </router-link>
       </li>
@@ -54,6 +54,7 @@
 import {AXIOS} from './http-common'
 import AllListsButton from './AllListsButton'
 import ErrorAlert from './ErrorAlert'
+import ItemsList from './classes/ItemsList'
 
 export default {
   name: 'ItemsList',
@@ -61,7 +62,7 @@ export default {
   props: ['listId'],
   data () {
     return {
-      list: [],
+      list: {},
       loading: true,
       error: false,
       message: ''
@@ -70,7 +71,7 @@ export default {
   mounted () {
     AXIOS.get('/itemsList/' + this.listId)
       .then(response => {
-        this.list = response.data
+        this.list = new ItemsList(response.data)
         this.loading = false
         this.error = false
       })

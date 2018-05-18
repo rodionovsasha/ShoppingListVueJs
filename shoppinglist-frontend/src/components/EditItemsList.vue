@@ -2,12 +2,12 @@
   <div class="col-md-6 offset-md-3">
     <error-alert v-if="error" v-bind:message="message"/>
 
-    <h1>Edit {{this.name}}</h1>
+    <h1>Edit {{this.list.name}}</h1>
     <form @submit.prevent="updateItemsList" method="post" class="form-horizontal" @keydown="fieldErrors.clear($event.target.name)">
       <div class="form-group">
         <label for="name" class="col-sm-1 control-label">Name:</label>
         <div class="col-sm-6">
-          <input type="text" id="name" name="name" v-model="name" class="form-control"/>
+          <input type="text" id="name" name="name" v-model="list.name" class="form-control"/>
           <small v-if="fieldErrors.has('name')" class="text-danger" v-text="fieldErrors.get('name')"></small>
         </div>
       </div>
@@ -29,6 +29,7 @@ import {AXIOS} from './http-common'
 import ErrorAlert from './ErrorAlert'
 import AllListsButton from './AllListsButton'
 import FieldErrors from './classes/FieldErrors'
+import ItemsList from './classes/ItemsList'
 
 export default {
   name: 'EditItemsList',
@@ -36,7 +37,7 @@ export default {
   props: ['listId'],
   data () {
     return {
-      name: '',
+      list: {},
       error: false,
       fieldErrors: new FieldErrors(),
       message: ''
@@ -45,7 +46,7 @@ export default {
   mounted () {
     AXIOS.get('/itemsList/' + this.listId)
       .then(response => {
-        this.name = response.data.name
+        this.list = new ItemsList(response.data)
         this.error = false
       })
       .catch(error => {
@@ -56,7 +57,7 @@ export default {
   methods: {
     updateItemsList: function () {
       AXIOS.put('/itemsList/' + this.listId, {
-        name: this.name
+        name: this.list.name
       })
         .then(() => {
           this.$router.push('/')
