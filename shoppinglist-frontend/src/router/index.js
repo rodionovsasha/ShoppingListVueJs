@@ -4,6 +4,7 @@ import ShoppingList from '@/components/ShoppingList'
 import ItemsList from '@/components/ItemsList'
 import AddItemsList from '@/components/AddItemsList'
 import EditItemsList from '@/components/EditItemsList'
+import Item from '@/components/Item'
 import AddItem from '@/components/AddItem'
 import EditItem from '@/components/EditItem'
 
@@ -31,6 +32,12 @@ export default new Router({
       path: '/editItemsList/:listId',
       name: 'EditItemsList',
       component: EditItemsList,
+      props: true
+    },
+    {
+      path: '/item/:itemId',
+      name: 'Item',
+      component: Item,
       props: true
     },
     {

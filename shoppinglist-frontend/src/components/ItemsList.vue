@@ -15,7 +15,7 @@
             <ul class="list-inline text-right">
               <li class="list-inline-item">
                 <a href="#" @click.prevent="buy(item.id, index)" class="badge badge-success" role="button">
-                  {{ item.bought ? 'Take out' : 'Bought' }}
+                  {{ item.bought ? 'Take out' : 'Buy' }}
                 </a>
               </li>
               <li class="list-inline-item">
@@ -86,14 +86,12 @@ export default {
         .then(() => {
           console.log('Buy clicked')
           this.error = false
-          this.loading = false
           this.list.items[index].bought = !this.list.items[index].bought
         })
         .catch(error => {
           console.log(error)
           this.error = true
           this.message = error.toString()
-          this.loading = false
         })
     },
     confirmDeleteItem: function (id, index) {
@@ -123,7 +121,6 @@ export default {
           AXIOS.delete('/itemsList/' + id)
             .then(() => {
               this.$router.push('/')
-              this.error = false
             })
             .catch(error => {
               console.log(error)
