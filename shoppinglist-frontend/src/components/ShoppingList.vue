@@ -13,9 +13,7 @@
         </p>
       </li>
     </ul>
-    <router-link to="/addItemsList" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="right" title="Add new list" aria-hidden="true">
-      <span class="oi oi-plus"></span>
-    </router-link>
+    <router-link to="/addItemsList" class="btn btn-success btn-sm">Add</router-link>
   </div>
 </template>
 

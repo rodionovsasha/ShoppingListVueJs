@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ShoppingList.vue Should render correct html snapshot with loading 1`] = `
+<div class="col-md-6 offset-md-3">
+    <!---->
+    <h1>Shopping lists</h1>
+    <div>Loading...</div>
+    <router-link to="/addItemsList" class="btn btn-success btn-sm">Add</router-link>
+</div>
+`;
+
+exports[`ShoppingList.vue Should render correct html snapshot without loading 1`] = `
+<div class="col-md-6 offset-md-3">
+    <!---->
+    <h1>Shopping lists</h1>
+    <ul class="list-unstyled">
+        <li>
+            <p>
+                <router-link to="[object Object]" class="btn btn-outline-secondary">list1</router-link>
+                <router-link to="[object Object]" class="btn btn-warning btn-sm">Edit</router-link>
+                <a href="#" class="btn btn-danger btn-sm">Delete</a>
+            </p>
+        </li>
+    </ul>
+    <router-link to="/addItemsList" class="btn btn-success btn-sm">Add</router-link>
+</div>
+`;
+
+exports[`ShoppingList.vue Should render error message when backend is not available 1`] = `
+<div class="col-md-6 offset-md-3">
+    <div>
+        <div role="alert" class="alert alert-danger"><strong>Network connection</strong></div>
+    </div>
+    <h1>Shopping lists</h1>
+    <div>Loading...</div>
+    <router-link to="/addItemsList" class="btn btn-success btn-sm">Add</router-link>
+</div>
+`;
