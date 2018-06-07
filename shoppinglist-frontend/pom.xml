@@ -46,9 +46,6 @@
             <goals>
               <goal>npm</goal>
             </goals>
-            <!-- optional: default phase is "generate-resources" -->
-            <!--<phase>generate-resources</phase>-->
-            <!-- Optional configuration which provides for running any npm command -->
             <configuration>
               <arguments>install</arguments>
             </configuration>
@@ -63,22 +60,6 @@
               <arguments>test</arguments>
             </configuration>
           </execution>
-          <!-- Build and minify static files -->
-          <!--<execution>
-            <id>npm run build</id>
-            <goals>
-              <goal>npm</goal>
-            </goals>
-            <configuration>
-              <arguments>run build</arguments>
-            </configuration>
-          </execution>-->
-          <!--<execution>
-              <id>webpack build</id>
-              <goals>
-                  <goal>webpack</goal>
-              </goals>
-          </execution>-->
         </executions>
       </plugin>
     </plugins>

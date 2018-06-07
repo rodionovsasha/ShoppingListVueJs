@@ -84,10 +84,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <excludes>
-                        <exclude>com/github/rodionovsasha/shoppinglistsinglepage/Application.class</exclude>
-                        <exclude>com/github/rodionovsasha/shoppinglistsinglepage/entities/**</exclude>
-                    </excludes>
                     <rules>
                         <rule implementation="org.jacoco.maven.RuleConfiguration">
                             <element>BUNDLE</element>
