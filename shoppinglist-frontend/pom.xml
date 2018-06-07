@@ -50,7 +50,7 @@
               <arguments>install</arguments>
             </configuration>
           </execution>
-          <!-- Rul all tests -->
+          <!-- Run all tests -->
           <execution>
             <id>npm test</id>
             <goals>
