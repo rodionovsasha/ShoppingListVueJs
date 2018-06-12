@@ -8,7 +8,7 @@
       <li v-for="(list, index) in itemsLists" v-bind:key="list.id">
         <p>
           <router-link v-bind:to="{ path: '/itemsList/' + list.id }" class="btn btn-outline-secondary">{{ list.name }}</router-link>
-          <router-link v-bind:to="{ path: '/editItemsList/' + list.id }" class="btn btn-warning btn-sm">Edit</router-link>
+          <router-link v-bind:to="{ path: '/editItemsList/' + list.id }" class="btn btn-warning btn-sm mx-1">Edit</router-link>
           <a href="#" class="btn btn-danger btn-sm" @click.prevent="confirmDeleteList(list.id, index)">Delete</a>
         </p>
       </li>
