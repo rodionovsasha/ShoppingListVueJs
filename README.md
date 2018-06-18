@@ -2,8 +2,6 @@
 
 # ShoppingList Vue.js
 
-A live deployment is available on Heroku: https://shopping-list-vue-js.herokuapp.com/
-
 ### Build the application
 <pre>
 mvn clean install
