@@ -17,7 +17,7 @@ exports[`ShoppingList.vue Should render correct html snapshot without loading 1`
         <li>
             <p>
                 <router-link to="[object Object]" class="btn btn-outline-secondary">list1</router-link>
-                <router-link to="[object Object]" class="btn btn-warning btn-sm">Edit</router-link>
+                <router-link to="[object Object]" class="btn btn-warning btn-sm mx-1">Edit</router-link>
                 <a href="#" class="btn btn-danger btn-sm">Delete</a>
             </p>
         </li>
