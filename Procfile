@@ -1,1 +1,1 @@
-web: java -jar shoppinglist-backend/target/shoppinglist-backend.jar
+web: java -jar -Dserver.port=$PORT shoppinglist-backend/target/*.jar
