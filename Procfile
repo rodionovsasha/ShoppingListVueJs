@@ -1,0 +1,1 @@
+web: java -jar shoppinglist-backend/target/shoppinglist-backend.jar
