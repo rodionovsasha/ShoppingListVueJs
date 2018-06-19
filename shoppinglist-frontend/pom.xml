@@ -46,6 +46,7 @@
             <goals>
               <goal>npm</goal>
             </goals>
+            <phase>generate-resources</phase>
             <configuration>
               <arguments>install</arguments>
             </configuration>
@@ -58,6 +59,16 @@
             </goals>
             <configuration>
               <arguments>test</arguments>
+            </configuration>
+          </execution>
+          <!-- Build and minify static files -->
+          <execution>
+            <id>npm run build</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>run build</arguments>
             </configuration>
           </execution>
         </executions>

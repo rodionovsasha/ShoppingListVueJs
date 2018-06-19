@@ -53,7 +53,7 @@
                             <overwrite>true</overwrite>
                             <resources>
                                 <resource>
-                                    <directory>${main.basedir}/shoppinglist-frontend/target/dist</directory>
+                                    <directory>${project.parent.basedir}/shoppinglist-frontend/target/dist</directory>
                                     <includes>
                                         <include>static/</include>
                                         <include>index.html</include>
