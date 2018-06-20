@@ -6,6 +6,7 @@ import router from './router/index'
 import VuejsDialog from 'vuejs-dialog'
 
 Vue.config.productionTip = false
+Vue.use(VuejsDialog)
 
 /* eslint-disable no-new */
 new Vue({
@@ -14,4 +15,3 @@ new Vue({
   components: {App},
   template: '<App/>'
 })
-Vue.use(VuejsDialog)

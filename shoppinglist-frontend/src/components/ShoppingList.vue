@@ -40,7 +40,6 @@ export default {
         this.error = false
       })
       .catch(error => {
-        console.log(error)
         this.error = true
         this.message = error.toString()
         this.loading = false
