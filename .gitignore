@@ -3,6 +3,7 @@ node_modules/
 /dist/
 *.log*
 */test/unit/coverage/
+**/resources/public/
 target/
 
 # Editor directories and files
